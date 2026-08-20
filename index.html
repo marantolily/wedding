@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Save the Date — Robert & Lily</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      background-color: #031a28;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: calc(2rem - 10px) 1rem 3rem;
+      background-color: #031a28;
+      background-image: url('reef.jpg');
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: cover;
+      background-attachment: scroll;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow-x: hidden;
+    }
+
+    .hero-layout {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100%;
+      position: relative;
+      margin-bottom: -14px;
+    }
+
+    .things-to-do {
+      position: absolute;
+      left: calc(50% + min(46vw, 260px));
+      right: 0;
+      top: calc(clamp(1.5rem, 6vw, 2.5rem) + clamp(4rem, 14vw, 7rem));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 clamp(0.75rem, 2vw, 1.5rem);
+      text-align: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: #f0f9fb;
+      text-shadow: 0 1px 8px rgba(15, 77, 102, 0.45);
+    }
+
+    .things-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      line-height: 1.35;
+      width: 100%;
+      max-width: 280px;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(186, 238, 251, 0.65);
+      color: #f0f9fb;
+      opacity: 0;
+      transform: translateX(16px);
+      animation: thingsTitleIn 0.55s cubic-bezier(0.34, 1.2, 0.64, 1) 1s forwards;
+    }
+
+    .things-list {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .things-list li {
+      position: relative;
+      margin-bottom: 0.75em;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      line-height: 1.45;
+      color: #d4eef8;
+      opacity: 0;
+      transform: translateX(16px);
+      animation: thingBulletIn 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+    }
+
+    .things-list li:nth-child(1) { animation-delay: 1.25s; }
+    .things-list li:nth-child(2) { animation-delay: 1.45s; }
+    .things-list li:nth-child(3) { animation-delay: 1.65s; }
+    .things-list li:nth-child(4) { animation-delay: 1.85s; }
+    .things-list li:nth-child(5) { animation-delay: 2.05s; }
+    .things-list li:nth-child(6) { animation-delay: 2.25s; }
+    .things-list li:nth-child(7) { animation-delay: 2.45s; }
+
+    .page {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(0.9);
+      transform-origin: top center;
+      position: relative;
+    }
+
+    .scene {
+      position: relative;
+      width: min(92vw, 520px);
+      height: min(92vw, 520px);
+      margin-top: clamp(1.5rem, 6vw, 2.5rem);
+      perspective: 1200px;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .envelope {
+      position: absolute;
+      top: clamp(2rem, 10vw, 3.5rem);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: rotate(-8deg) translateY(-30px);
+      transform-origin: center center;
+      transform-style: preserve-3d;
+      pointer-events: none;
+    }
+
+    .envelope-body {
+      position: absolute;
+      inset: 18% 8%;
+      border-radius: 4px;
+      background-image: url('envelope-texture.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #b0b0b0;
+      box-shadow:
+        0 20px 50px rgba(50, 50, 60, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .envelope-lining {
+      position: absolute;
+      inset: 18% 8%;
+      clip-path: polygon(0 0, 100% 0, 50% 55%);
+      background: linear-gradient(180deg, #ececec 0%, #d8d8d8 100%);
+      z-index: 1;
+      opacity: 0;
+      animation: liningReveal 0.6s ease 0.4s forwards;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      inset: 18% 8%;
+      clip-path: polygon(0 0, 100% 0, 50% 55%);
+      transform-origin: 50% 0%;
+      transform: rotateX(0deg);
+      animation: flapOpen 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+      z-index: 2;
+      background-image: url('envelope-texture.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #b0b0b0;
+    }
+
+    .card-wrapper {
+      position: absolute;
+      top: clamp(2rem, 10vw, 3.5rem);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .card {
+      width: 72%;
+      aspect-ratio: 1;
+      background:
+        radial-gradient(ellipse at 25% 15%, rgba(180, 230, 255, 0.5) 0%, transparent 45%),
+        radial-gradient(ellipse at 75% 85%, rgba(126, 200, 227, 0.25) 0%, transparent 50%),
+        linear-gradient(165deg, #f8fdff 0%, #eef8fc 45%, #e2f3f9 100%);
+      border: 1px solid rgba(126, 200, 227, 0.45);
+      border-radius: 2px;
+      box-shadow:
+        0 24px 60px rgba(15, 77, 102, 0.28),
+        0 8px 20px rgba(15, 77, 102, 0.15);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(60px) scale(0.88) rotate(-2deg);
+      opacity: 0;
+      animation: cardPopOut 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s forwards;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12% 10%;
+      text-align: center;
+      color: #1a4a57;
+    }
+
+    .card-lionfish {
+      position: absolute;
+      top: -22px;
+      right: 0;
+      width: clamp(117px, 50%, 175px);
+      height: auto;
+      opacity: 0.95;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card-turtle {
+      position: absolute;
+      bottom: 0;
+      left: -14px;
+      width: clamp(105px, 45%, 158px);
+      height: auto;
+      transform: translateY(30%);
+      opacity: 0.95;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .kindly {
+      font-size: clamp(0.55rem, 2.2vw, 0.7rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #5a8f9f;
+      margin-bottom: 0.6em;
+    }
+
+    .save-the-date {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.15em;
+      margin-bottom: 0.5em;
+      line-height: 1;
+    }
+
+    .save-the-date .word {
+      font-size: clamp(1.6rem, 6.5vw, 2.4rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #1a4a57;
+    }
+
+    .save-the-date .the {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.4rem, 5.5vw, 2rem);
+      font-weight: 400;
+      color: #3d7a8c;
+      position: relative;
+      top: -0.1em;
+    }
+
+    .subtitle {
+      font-size: clamp(0.5rem, 1.8vw, 0.62rem);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #5a8f9f;
+      margin: 0.8em 0 0.5em;
+    }
+
+    .names {
+      font-size: clamp(0.85rem, 3.2vw, 1.15rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #1a4a57;
+      margin-bottom: 0.35em;
+    }
+
+    .week-of {
+      font-size: clamp(0.5rem, 1.8vw, 0.62rem);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #5a8f9f;
+      margin: 0.35em 0 0.25em;
+    }
+
+    .date {
+      font-size: clamp(0.95rem, 3.5vw, 1.2rem);
+      letter-spacing: 0.12em;
+      color: #2d6b7d;
+      margin-bottom: 0.35em;
+    }
+
+    .date-note {
+      font-size: clamp(0.42rem, 1.35vw, 0.52rem);
+      letter-spacing: 0.04em;
+      font-style: italic;
+      line-height: 1.45;
+      color: #5a8f9f;
+      margin: 0 0 0.65em;
+      max-width: 95%;
+    }
+
+    .location {
+      font-size: clamp(0.5rem, 1.8vw, 0.62rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #5a8f9f;
+      margin-bottom: 1em;
+    }
+
+    .follow {
+      font-size: clamp(0.45rem, 1.5vw, 0.55rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-style: italic;
+      color: #7aa8b5;
+    }
+
+    .travel-note {
+      display: block;
+      width: 100%;
+      max-width: 340px;
+      margin: 1.5rem auto 0;
+      padding: 14px 20px;
+      background-color: #dcf5fd;
+      background-image: linear-gradient(#dcf5fd, #dcf5fd);
+      border: 1px solid rgba(126, 200, 227, 0.55);
+      border-radius: 14px;
+      box-shadow: 0 6px 28px rgba(26, 74, 87, 0.1);
+      color: #1a4a57;
+      text-align: center;
+      font-size: clamp(0.72rem, 2vw, 0.86rem);
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    .calendar-section {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 320px;
+      margin-top: -16px;
+      text-align: center;
+    }
+
+    .calendar-btn {
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+      padding: 14px 32px;
+      background-color: #baeefb;
+      color: #1a4a57;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background-color 0.2s;
+    }
+
+    .calendar-btn:hover { background-color: #9dd4f0; }
+
+    .calendar-hint {
+      margin: 20px 0 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #d4eef8;
+    }
+
+    .qr-codes {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .qr-item {
+      flex: 1;
+      max-width: 140px;
+    }
+
+    .qr-item a {
+      display: block;
+      text-decoration: none;
+    }
+
+    .qr-item img {
+      display: block;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      border: 4px solid #e2f3f9;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .qr-item p {
+      margin: 12px 0 0;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #f0f9fb;
+    }
+
+    @keyframes flapOpen {
+      0%   { transform: rotateX(0deg); opacity: 1; }
+      100% { transform: rotateX(-160deg); opacity: 1; }
+    }
+
+    @keyframes liningReveal {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes cardPopOut {
+      0% {
+        transform: translateY(60px) scale(0.88) rotate(-2deg);
+        opacity: 0;
+      }
+      40% { opacity: 1; }
+      100% {
+        transform: translateY(-8px) scale(1) rotate(-2deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes thingsTitleIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes thingBulletIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @media (max-width: 1050px) {
+      body {
+        padding-bottom: 1.5rem;
+      }
+
+      .page {
+        margin-bottom: -12vh;
+      }
+
+      .hero-layout {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .calendar-section {
+        margin-top: 8px;
+      }
+
+      .card-turtle {
+        left: -34px;
+      }
+
+      .things-to-do {
+        position: static;
+        width: 100%;
+        max-width: 320px;
+        margin-top: 1.5rem;
+        order: 0;
+      }
+    }
+
+    @media (min-width: 1051px) {
+      .things-to-do {
+        top: calc(clamp(1.5rem, 6vw, 2.5rem) + clamp(4rem, 14vw, 7rem));
+      }
+
+      .calendar-section {
+        margin-top: -16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .envelope-flap,
+      .envelope-lining,
+      .card {
+        animation: none;
+        opacity: 1;
+        transform: translateY(-8px) scale(1) rotate(-2deg);
+      }
+      .envelope-flap { transform: rotateX(-160deg); opacity: 1; }
+      .envelope-lining { opacity: 1; }
+      .things-title,
+      .things-list li {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="hero-layout">
+      <div class="scene" id="scene">
+      <div class="envelope">
+        <div class="envelope-body"></div>
+        <div class="envelope-lining"></div>
+        <div class="envelope-flap"></div>
+      </div>
+
+      <div class="card-wrapper">
+        <div class="card">
+          <img class="card-lionfish" src="lionfish.png" alt="" aria-hidden="true">
+          <img class="card-turtle" src="sea-turtle.png" alt="" aria-hidden="true">
+          <div class="card-content">
+            <p class="kindly">Kindly</p>
+            <div class="save-the-date">
+              <span class="word">Save</span>
+              <span class="the">the</span>
+              <span class="word">Date</span>
+            </div>
+            <p class="subtitle">For the Wedding of</p>
+            <p class="names">Robert &amp; Lily</p>
+            <p class="week-of">The Week of</p>
+            <p class="date">April 15–22, 2028</p>
+            <p class="date-note">*Exact wedding date to be set. You're welcome to stay for half the week if that works best for you.</p>
+            <p class="location">Roatán, Honduras</p>
+            <p class="follow">Invitation to Follow</p>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <section class="calendar-section">
+      <a
+        class="calendar-btn"
+        href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Robert+and+Lily%27s+Wedding&amp;dates=20280415/20280423&amp;location=Roatan%2C+Honduras&amp;details=Save+the+Date.+Invitation+to+follow."
+        target="_blank"
+        rel="noopener noreferrer"
+      >Mark Your Calendar</a>
+
+      <p class="calendar-hint">Or scan to add to your calendar</p>
+
+      <div class="qr-codes">
+        <div class="qr-item">
+          <a href="https://lily-robert-wedding.vercel.app/apple-calendar.html">
+            <img src="qr-apple-v3.png" width="120" height="120" alt="QR code — Add to Apple Calendar">
+          </a>
+          <p>Apple Calendar</p>
+        </div>
+        <div class="qr-item">
+          <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Robert+and+Lily%27s+Wedding&amp;dates=20280415/20280423&amp;location=Roatan%2C+Honduras&amp;details=Save+the+Date.+Invitation+to+follow.">
+            <img src="qr-google-cal.png" width="120" height="120" alt="QR code — Add to Google/Android Calendar">
+          </a>
+          <p>Google/Android Calendar</p>
+        </div>
+      </div>
+
+      <p class="travel-note">Note: We recognise many of you are going to immediately look up flights. We are aware flights to Roatán can be expensive, especially on direct routes. We'll share tips for getting there more affordably in a future update, and we expect fares to come down once the new airport opens later this year.</p>
+    </section>
+
+    <aside class="things-to-do" id="thingsToDo" aria-label="Things to do in Roatán">
+      <h2 class="things-title">Things to Do in Roatán</h2>
+      <ul class="things-list">
+        <li>🤿 Get Scuba Certified</li>
+        <li>🪸 Dive the Mesoamerican Reef</li>
+        <li>🪁 Kitesurfing</li>
+        <li>🐒 Zipline the Jungle Canopy</li>
+        <li>🏖️ Relax on the Beach</li>
+        <li>🎣 Charter a Fishing Boat</li>
+        <li>🍹 Try Local Baleadas &amp; Rum</li>
+      </ul>
+    </aside>
+  </div>
+
+</body>
+</html>

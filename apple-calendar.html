@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add to Apple Calendar — Robert &amp; Lily</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="alternate" type="text/calendar" href="/wedding.ics" title="Robert and Lily's Wedding">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
+      background-color: #0f4d66;
+      background-image: url('reef.jpg');
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: cover;
+      background-attachment: scroll;
+      color: #f0f9fb;
+      font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      text-align: center;
+    }
+    .card {
+      max-width: 360px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-shadow: 0 1px 8px rgba(15, 77, 102, 0.45);
+    }
+    p {
+      margin: 0 0 24px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #d4eef8;
+      text-shadow: 0 1px 8px rgba(15, 77, 102, 0.45);
+    }
+    a.btn {
+      display: inline-block;
+      padding: 16px 28px;
+      background: #baeefb;
+      color: #1a4a57;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 2px;
+    }
+    .home-link {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: max(16px, env(safe-area-inset-top)) 24px 0;
+      color: #ffffff;
+      text-decoration: underline;
+      font-size: 14px;
+      text-shadow: 0 1px 6px rgba(15, 77, 102, 0.65);
+    }
+  </style>
+</head>
+<body>
+  <a class="home-link" href="/">Return to Home</a>
+  <div class="card">
+    <h1>Robert &amp; Lily's Wedding</h1>
+    <p>April 15–22, 2028<br>Roatán, Honduras</p>
+    <a class="btn" id="add" href="https://lily-robert-wedding.vercel.app/wedding.ics">Add to Apple Calendar</a>
+  </div>
+  <script>
+    (function () {
+      var icsUrl = 'https://lily-robert-wedding.vercel.app/wedding.ics';
+      var add = document.getElementById('add');
+      if (add) add.href = icsUrl;
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        window.location.replace(icsUrl);
+      }
+    })();
+  </script>
+</body>
+</html>

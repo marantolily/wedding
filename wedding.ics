@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Robert and Lily Wedding//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:lily-robert-wedding-20280415@lily-robert-wedding.vercel.app
+DTSTAMP:20260614T000000Z
+DTSTART;VALUE=DATE:20280415
+DTEND;VALUE=DATE:20280423
+SUMMARY:Robert and Lily's Wedding
+LOCATION:Roatán\, Honduras
+DESCRIPTION:Save the Date for the wedding of Robert and Lily. Invitation to follow.
+END:VEVENT
+END:VCALENDAR
