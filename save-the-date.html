@@ -515,9 +515,25 @@
         transform: none;
       }
     }
-  </style>
+  .site-menu { display:flex; gap:1.5rem; margin:0 auto 1.25rem; padding:.6rem 1.25rem; background:#031a28e8; border-radius:2rem; }
+.site-menu a { color:#eef8fc; font-size:1.1rem; text-decoration:none; }
+.site-menu a:hover, .site-menu a[aria-current="page"] { text-decoration:underline; text-underline-offset:.3em; }
+.home-copy { color:#eef8fc; max-width:30rem; margin:1rem auto; padding:.85rem 1rem; background:#031a28e8; border-radius:.65rem; text-align:center; font-size:1.13rem; line-height:1.45; }
+.travel-panel { width:min(100%, 42rem); margin:1rem auto; padding:clamp(1.3rem,5vw,3rem); color:#eef8fc; background:#031a28ef; border:1px solid #baeefb80; border-radius:1rem; font-size:1.17rem; line-height:1.5; }
+.travel-panel h1 { font-size:2.5rem; }
+.travel-panel h2 { margin:1.3rem 0 .3rem; }
+.travel-panel p + p { margin-top:.65rem; }
+.travel-panel ul { list-style:none; }
+
+
+@media (max-width: 1050px) {
+  .things-to-do { margin-inline: auto; }
+}
+</style>
+
 </head>
 <body>
+  <nav class="site-menu" aria-label="Wedding website"><a href="index.html" aria-current="page">Home</a><a href="travel.html">Travel</a></nav>
 
   <div class="page">
     <div class="hero-layout">
@@ -541,9 +557,7 @@
             </div>
             <p class="subtitle">For the Wedding of</p>
             <p class="names">Robert &amp; Lily</p>
-            <p class="week-of">The Week of</p>
-            <p class="date">April 15–22, 2028</p>
-            <p class="date-note">*Exact wedding date to be set. You're welcome to stay for half the week if that works best for you.</p>
+            <p class="date">April 17, 2028</p>
             <p class="location">Roatán, Honduras</p>
             <p class="follow">Invitation to Follow</p>
           </div>
@@ -560,7 +574,7 @@
         rel="noopener noreferrer"
       >Mark Your Calendar</a>
 
-      <p class="calendar-hint">Or scan to add to your calendar</p>
+      <p class="calendar-hint">Save the full week, April 15–22, to your calendar</p>
 
       <div class="qr-codes">
         <div class="qr-item">
@@ -577,7 +591,8 @@
         </div>
       </div>
 
-      <p class="travel-note">Note: We recognise many of you are going to immediately look up flights. We are aware flights to Roatán can be expensive, especially on direct routes. We'll share tips for getting there more affordably in a future update, and we expect fares to come down once the new airport opens later this year.</p>
+      <p class="home-copy">If you can make a week of it, we’d love for you to have time to explore the island. If you can only come for a few days, we’re just as excited to see you.</p>
+      <a class="calendar-btn" href="travel.html">Travel Details</a>
     </section>
 
     <aside class="things-to-do" id="thingsToDo" aria-label="Things to do in Roatán">
