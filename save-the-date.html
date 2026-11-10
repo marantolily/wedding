@@ -318,10 +318,10 @@
     }
 
     .location {
-      font-size: clamp(0.5rem, 1.8vw, 0.62rem);
+      font-size: clamp(0.65rem, 2.3vw, 0.82rem);
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: #5a8f9f;
+      color: #1a4a57;
       margin-bottom: 1em;
     }
 
@@ -529,7 +529,13 @@
 @media (max-width: 1050px) {
   .things-to-do { margin-inline: auto; }
 }
+.card-content > .subtitle,
+.card-content > .subtitle ~ p {
+  position: relative;
+  top: -0.45rem;
+}
 </style>
+
 
   <script defer src="guest-visits.js"></script>
 </head>
